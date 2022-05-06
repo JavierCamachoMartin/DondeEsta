@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
 {
@@ -9,13 +10,13 @@ public class MenuController : MonoBehaviour
     public GameObject wantedScreen;
     public TextMeshProUGUI labelTimer;
 
-    public bool isWantedScreen = false;
-    public float wantedTimer = 5f;
+    public int seg;
+    private float timer;
+    private bool isWantedScreen;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        
+        timer = seg;
     }
 
     // Update is called once per frame
@@ -35,14 +36,17 @@ public class MenuController : MonoBehaviour
     {
         if (isWantedScreen == true)
         {
-            wantedTimer -= Time.deltaTime;
-            labelTimer.text = wantedTimer.ToString();
-            if (wantedTimer <= 0)
+            timer -= Time.deltaTime;
+            
+            if (timer <= 0)
             {
-                wantedTimer = 0f;
+                timer = 0f;
                 wantedScreen.SetActive(false);
                 isWantedScreen = false;
             }
+
+            int tempSeg = Mathf.FloorToInt(timer % 60);
+            labelTimer.text = tempSeg.ToString();
         }
     }
 }
