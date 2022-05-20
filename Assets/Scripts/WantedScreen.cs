@@ -1,31 +1,58 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class WantedScreen : MonoBehaviour
 {
-    // Start is called before the first frame update
-    private void Start()
+    public static WantedScreen instance;
+
+    public TextMeshProUGUI contador;
+    public float timer;
+    public GameObject pantallaBuscar;
+    public GameObject spawnPoint;
+
+    void Awake()
     {
-        SetWantedCharacter(GameController.instance.BuscarPersonaje());
+        if (WantedScreen.instance == null)
+        {
+            WantedScreen.instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        SetWantedCharacter(GameController.instance.RandomPersonaje());
     }
 
     // Update is called once per frame
-    private void Update()
+    void Update()
     {
+        //Controla el tiempo que esta activa y cuando se quita la pantalla
         contador.text = timer.ToString("0");
         if (pantallaBuscar == true)
         {
             timer -= Time.deltaTime;
         }
 
-        pantallaBuscar.SetActive(false);
+        if(timer <= 0)
+        {
+            pantallaBuscar.SetActive(false);
+            //Tambien hay que apagar el personaje con la pantalla
+            GameController.instance.persona.SetActive(false);
+        }
     }
 
     public void SetWantedCharacter(GameObject personaje)
     {
         //Lo muestra en el spawnPoint
         personaje.transform.position = spawnPoint.transform.position;
-        personaje.transform.position = spawnPoint.transform.rotation;
+        
     }
 }
