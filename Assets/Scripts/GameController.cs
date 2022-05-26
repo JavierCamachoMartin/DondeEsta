@@ -30,7 +30,7 @@ public class GameController : MonoBehaviour
     {
         timer = seg;
         searchTimer = searchSeg;
-
+        timerScreen.SetActive(false);
         if (GameController.instance == null)
         {
             GameController.instance = this;

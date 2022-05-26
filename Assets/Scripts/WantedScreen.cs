@@ -53,6 +53,5 @@ public class WantedScreen : MonoBehaviour
     {
         //Lo muestra en el spawnPoint
         personaje.transform.position = spawnPoint.transform.position;
-        
     }
 }
