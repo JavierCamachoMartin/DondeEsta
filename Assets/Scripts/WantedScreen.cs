@@ -8,7 +8,7 @@ public class WantedScreen : MonoBehaviour
     public static WantedScreen instance;
 
     public TextMeshProUGUI contador;
-    public float timer;
+    public float timer = 5f;
     public GameObject pantallaBuscar;
     public GameObject spawnPoint;
 
@@ -17,7 +17,7 @@ public class WantedScreen : MonoBehaviour
         if (WantedScreen.instance == null)
         {
             WantedScreen.instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            Mostrar();
         }
         else
         {
@@ -25,33 +25,36 @@ public class WantedScreen : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        SetWantedCharacter(GameController.instance.RandomPersonaje());
-    }
-
     // Update is called once per frame
     void Update()
     {
-        //Controla el tiempo que esta activa y cuando se quita la pantalla
-        contador.text = timer.ToString("0");
-        if (pantallaBuscar == true)
+        if (timer <= 0)
         {
-            timer -= Time.deltaTime;
+            Cerrar();
         }
 
-        if(timer <= 0)
-        {
-            pantallaBuscar.SetActive(false);
-            //Tambien hay que apagar el personaje con la pantalla
-            GameController.instance.persona.SetActive(false);
-        }
+        timer -= Time.deltaTime;
+        contador.text = timer.ToString("f0");
     }
 
-    public void SetWantedCharacter(GameObject personaje)
+    public void Mostrar()
     {
+        pantallaBuscar.SetActive(true);
+        SetWantedCharacter();
+    }
+
+    public void Cerrar()
+    {
+        pantallaBuscar.SetActive(false);
+    }
+
+    public void SetWantedCharacter()
+    {
+        GameObject personaje = GameController.instance.RandomPersonaje();
         //Lo muestra en el spawnPoint
-        personaje.transform.position = spawnPoint.transform.position;
+        personaje.transform.parent = spawnPoint.transform;
+        personaje.transform.position = Vector3.zero;
+        personaje.transform.localScale = Vector3.one * 200;
+        personaje.transform.LookAt(Camera.main.transform);
     }
 }
