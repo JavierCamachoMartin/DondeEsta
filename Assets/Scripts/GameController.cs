@@ -38,5 +38,4 @@ public class GameController : MonoBehaviour
         iChar = Random.Range(0, personajes.Length);
         return Instantiate(personajes[iChar]); //El instantiate es para crear un personaje nuevo basado en la línea de arriba //Ponemos corchete porque es una Array
     }
-
 }

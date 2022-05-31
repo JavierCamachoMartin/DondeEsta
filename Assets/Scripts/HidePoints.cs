@@ -10,8 +10,10 @@ public class HidePoints : MonoBehaviour
     public GameObject selectedHidePoint;
 
     public GameObject playerPrefab;
-
     private GameObject personaje;
+    public GameObject randomPersonaje;
+
+    public int numeroHidePoints;
 
     void Awake()
     {
@@ -38,5 +40,19 @@ public class HidePoints : MonoBehaviour
         personaje.transform.parent = selectedHidePoint.transform;
         personaje.transform.localScale = Vector3.one * 3;
         personaje.transform.LookAt(Camera.main.transform);
+    }
+
+    public GameObject RandomHidePoints()
+    {
+        numeroHidePoints = Random.Range(0, hidePoints.Length);
+        randomPersonaje = GameController.instance.personajes[Random.Range(0, GameController.instance.personajes.Length)];
+
+        while (hidePoints[numeroHidePoints].transform.childCount != 0)
+        {
+            Instantiate(randomPersonaje, transform.position, randomPersonaje.transform.rotation);
+            numeroHidePoints = Random.Range(0, hidePoints.Length);
+        }
+        return hidePoints[numeroHidePoints];
+
     }
 }
