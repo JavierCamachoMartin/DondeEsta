@@ -7,13 +7,6 @@ public class HidePoints : MonoBehaviour
     public static HidePoints instance;
 
     public GameObject[] hidePoints;
-    public GameObject selectedHidePoint;
-
-    public GameObject playerPrefab;
-    private GameObject personaje;
-    public GameObject randomPersonaje;
-
-    public int numeroHidePoints;
 
     void Awake()
     {
@@ -27,32 +20,23 @@ public class HidePoints : MonoBehaviour
         }
     }
 
-    void Start()
+    void Rellenar()
     {
-        RandomEscondite();
-    }
-
-    public void RandomEscondite()
-    {
-        int random = Random.Range(0, hidePoints.Length);
-        selectedHidePoint = hidePoints[random];
-        personaje = Instantiate(GameController.instance.personajes[GameController.instance.iChar], selectedHidePoint.transform.position, selectedHidePoint.transform.localRotation);
-        personaje.transform.parent = selectedHidePoint.transform;
-        personaje.transform.localScale = Vector3.one * 3;
-        personaje.transform.LookAt(Camera.main.transform);
+        hidePoints = new GameObject[transform.childCount];
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            hidePoints[i] = transform.GetChild(i).gameObject;
+        }
     }
 
     public GameObject RandomHidePoints()
     {
-        numeroHidePoints = Random.Range(0, hidePoints.Length);
-        randomPersonaje = GameController.instance.personajes[Random.Range(0, GameController.instance.personajes.Length)];
+        int pos = Random.Range(0, hidePoints.Length);
 
-        while (hidePoints[numeroHidePoints].transform.childCount != 0)
+        while (hidePoints[pos].transform.childCount != 0)
         {
-            Instantiate(randomPersonaje, transform.position, randomPersonaje.transform.rotation);
-            numeroHidePoints = Random.Range(0, hidePoints.Length);
+            pos = Random.Range(0, hidePoints.Length);
         }
-        return hidePoints[numeroHidePoints];
-
+        return hidePoints[pos];
     }
 }

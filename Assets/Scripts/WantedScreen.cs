@@ -46,6 +46,7 @@ public class WantedScreen : MonoBehaviour
     public void Cerrar()
     {
         pantallaBuscar.SetActive(false);
+        GameController.instance.RellenarNivel();
     }
 
     public void SetWantedCharacter()
@@ -54,7 +55,7 @@ public class WantedScreen : MonoBehaviour
         //Lo muestra en el spawnPoint
         personaje.transform.parent = spawnPoint.transform;
         personaje.transform.position = Vector3.zero;
-        personaje.transform.localScale = Vector3.one * 200;
+        personaje.transform.localScale = Vector3.one;
         personaje.transform.LookAt(Camera.main.transform);
     }
 }
