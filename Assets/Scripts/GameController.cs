@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour
     public GameObject[] personajes;
     public int iChar;
 
-    public bool isPlaying;
+    public bool isPlaying = false;
     public int nivel = 1;
 
     void Awake()
@@ -25,6 +25,8 @@ public class GameController : MonoBehaviour
         {
             Destroy(this);
         }
+
+        
     }
 
     // Update is called once per frame
@@ -34,11 +36,20 @@ public class GameController : MonoBehaviour
         {
             SceneManager.LoadScene(0);
         }
+
+        RaycastPoint();
+
+        if(nivel > 5)
+        {
+            nivel = 1;
+            SceneManager.LoadScene(0);
+        }
     }
 
     public GameObject RandomPersonaje() //GameObject para que devuelva un GameObject
     {
         iChar = Random.Range(0, personajes.Length);
+        personajes[iChar].tag = "Player";
         return Instantiate(personajes[iChar]); //El instantiate es para crear un personaje nuevo basado en la línea de arriba //Ponemos corchete porque es una Array
     }
 
@@ -71,6 +82,40 @@ public class GameController : MonoBehaviour
             personas.transform.localPosition = Vector3.zero;
             personas.transform.localScale = Vector3.one;
             personas.transform.LookAt(Camera.main.transform);
+        }
+    }
+
+    public void RaycastPoint()
+    {
+        if (isPlaying == true)
+        {
+            if((Input.touchCount >= 1 && Input.GetTouch(0).phase == TouchPhase.Ended) == (Input.GetMouseButtonUp(0)))
+            {
+                Vector3 pos = Input.mousePosition;
+                if(Application.platform == RuntimePlatform.Android)
+                {
+                    pos = Input.GetTouch(0).position;
+                }
+
+                //Raycast
+                Ray rayo = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hitInfo; //variable del raycast
+                if(Physics.Raycast(rayo, out hitInfo))
+                {
+                    if(hitInfo.transform.tag == "Player")
+                    {
+                        Debug.Log("Encontrado");
+                        nivel++;
+                        SceneManager.LoadScene(Random.Range(1, 2));
+                        Debug.Log(nivel);
+                    }
+
+                    if(hitInfo.transform.tag == "Persona")
+                    {
+                        Debug.Log("Perdiste");
+                    }
+                }
+            }
         }
     }
 }

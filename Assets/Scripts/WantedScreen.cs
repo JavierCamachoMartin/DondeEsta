@@ -40,12 +40,14 @@ public class WantedScreen : MonoBehaviour
     public void Mostrar()
     {
         pantallaBuscar.SetActive(true);
+        GameController.instance.isPlaying = false;
         SetWantedCharacter();
     }
 
     public void Cerrar()
     {
         pantallaBuscar.SetActive(false);
+        GameController.instance.isPlaying = true;
         GameController.instance.RellenarNivel();
     }
 
@@ -54,7 +56,7 @@ public class WantedScreen : MonoBehaviour
         GameObject personaje = GameController.instance.RandomPersonaje();
         //Lo muestra en el spawnPoint
         personaje.transform.parent = spawnPoint.transform;
-        personaje.transform.position = Vector3.zero;
+        personaje.transform.position = spawnPoint.transform.position;
         personaje.transform.localScale = Vector3.one;
         personaje.transform.LookAt(Camera.main.transform);
     }
