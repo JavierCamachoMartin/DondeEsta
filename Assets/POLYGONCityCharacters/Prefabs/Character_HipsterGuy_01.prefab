@@ -1079,7 +1079,7 @@ GameObject:
   - component: {fileID: 2453644943284161344}
   m_Layer: 0
   m_Name: Character_HipsterGuy_01
-  m_TagString: Persona
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

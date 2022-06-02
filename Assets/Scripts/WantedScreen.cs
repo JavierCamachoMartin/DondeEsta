@@ -57,7 +57,7 @@ public class WantedScreen : MonoBehaviour
         //Lo muestra en el spawnPoint
         personaje.transform.parent = spawnPoint.transform;
         personaje.transform.position = spawnPoint.transform.position;
-        personaje.transform.localScale = Vector3.one;
-        personaje.transform.LookAt(Camera.main.transform);
+        personaje.transform.localScale = Vector3.one * 300;
+        personaje.transform.rotation = spawnPoint.transform.rotation;
     }
 }

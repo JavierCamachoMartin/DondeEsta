@@ -1271,7 +1271,7 @@ GameObject:
   - component: {fileID: 632268422299767983}
   m_Layer: 0
   m_Name: Character_Gangster_01
-  m_TagString: Persona
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
