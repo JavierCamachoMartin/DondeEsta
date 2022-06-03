@@ -16,12 +16,12 @@ public class TimerPopUp : MonoBehaviour
 
     void Awake()
     {
-        searchTimer = searchSeg;
+        timerScreen.SetActive(false);
 
         if (TimerPopUp.instance == null)
         {
             TimerPopUp.instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            
         }
         else
         {
@@ -35,8 +35,14 @@ public class TimerPopUp : MonoBehaviour
         {
             timerScreen.SetActive(true);
             searchTimer += Time.deltaTime;
-            int tempSeg = Mathf.FloorToInt(searchTimer % 60);
-            labelSearchTimer.text = tempSeg.ToString();
+            labelSearchTimer.text = searchTimer.ToString("f0");
+        }
+
+        if (WantedScreen.instance.timer >= 0)
+        {
+            timerScreen.SetActive(false);
+            searchTimer = 0;
+            labelSearchTimer.text = searchTimer.ToString("f0");
         }
     }
 }

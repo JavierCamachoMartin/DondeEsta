@@ -49,6 +49,7 @@ public class WantedScreen : MonoBehaviour
         pantallaBuscar.SetActive(false);
         GameController.instance.isPlaying = true;
         GameController.instance.RellenarNivel();
+        GameController.instance.PowerUp();
     }
 
     public void SetWantedCharacter()
